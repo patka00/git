@@ -1943,6 +1943,7 @@ static int for_each_fullref_in_pattern(struct ref_filter *filter,
 {
 	struct string_list prefixes = STRING_LIST_INIT_DUP;
 	struct string_list_item *prefix;
+	const char *all = "refs/";
 	int ret;
 
 	if (!filter->match_as_path) {
@@ -1951,7 +1952,7 @@ static int for_each_fullref_in_pattern(struct ref_filter *filter,
 		 * prefixes like "refs/heads/" etc. are stripped off,
 		 * so we have to look at everything:
 		 */
-		return for_each_fullref_in("", cb, cb_data, broken);
+		return for_each_fullref_in(all, cb, cb_data, broken);
 	}
 
 	if (filter->ignore_case) {
@@ -1960,12 +1961,12 @@ static int for_each_fullref_in_pattern(struct ref_filter *filter,
 		 * so just return everything and let the caller
 		 * sort it out.
 		 */
-		return for_each_fullref_in("", cb, cb_data, broken);
+		return for_each_fullref_in(all, cb, cb_data, broken);
 	}
 
 	if (!filter->name_patterns[0]) {
 		/* no patterns; we have to look at everything */
-		return for_each_fullref_in("", cb, cb_data, broken);
+		return for_each_fullref_in(all, cb, cb_data, broken);
 	}
 
 	find_longest_prefixes(&prefixes, filter->name_patterns);
