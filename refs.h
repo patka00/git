@@ -825,6 +825,7 @@ int reflog_expire(const char *refname, const struct object_id *oid,
 int ref_storage_backend_exists(const char *name);
 
 struct ref_store *get_main_ref_store(struct repository *r);
+const char *ref_store_backend_name(struct ref_store *refs);
 
 /**
  * Submodules

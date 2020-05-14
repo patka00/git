@@ -698,4 +698,10 @@ int parse_loose_ref_contents(const char *buf, struct object_id *oid,
 void base_ref_store_init(struct ref_store *refs,
 			 const struct ref_storage_be *be);
 
+/*
+ * Print out ref operations as they occur. Useful for debugging alternate ref
+ * backends.
+ */
+struct ref_store *debug_wrap(const char *gitdir, struct ref_store *store);
+
 #endif /* REFS_REFS_INTERNAL_H */

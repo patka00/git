@@ -44,6 +44,11 @@ int ref_storage_backend_exists(const char *name)
 	return find_ref_storage_backend(name) != NULL;
 }
 
+const char *ref_store_backend_name(struct ref_store *refs)
+{
+	return refs->be->name;
+}
+
 /*
  * How to handle various characters in refnames:
  * 0: An acceptable character for refs
@@ -1784,6 +1789,9 @@ struct ref_store *get_main_ref_store(struct repository *r)
 						 r->ref_storage_format :
 						 default_ref_storage(),
 					 REF_STORE_ALL_CAPS);
+	if (getenv("GIT_DEBUG_REFS")) {
+		r->refs_private = debug_wrap(r->gitdir, r->refs_private);
+	}
 	return r->refs_private;
 }
 
